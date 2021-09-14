@@ -1,0 +1,17 @@
+#chamada do modulo de reescrita
+<IfModule mod_rewrite.c>
+
+# medida preventiva / se o módulo de reescrita
+#estiver carregado e não estiver ativo, ativamos
+RewriteEngine on
+
+#medida de exceção à regra de reescrita
+#ignorar reescrita quando caminho apontar para um arquivo
+# e quando apontar para uma pasta
+RewriteCond %{REQUEST_FILENAME} !-f #f de file
+RewriteCond %{REQUEST_FILENAME} !-d #d de diretório
+
+RewriteRule ^(.*)$ index.php?$1 [L] # retirando o index da URL
+
+
+</IfModule>
