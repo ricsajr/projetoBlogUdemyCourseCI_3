@@ -28,6 +28,11 @@ class Categorias_model extends CI_Model {
 
 	}
 
+	public function adicionar($titulo){
+		$dados['titulo'] = $titulo;
+		return $this->db->insert('categoria', $dados);
+	}
+
 
 
 

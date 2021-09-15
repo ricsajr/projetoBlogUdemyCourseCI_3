@@ -15,6 +15,18 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-lg-12">
+							<?php
+								echo validation_errors('<div class="alert alert-danger">','</div>');//helper para trazer os erros da validação do form no controller
+								echo form_open('admin/categoria/inserir');//helper para abrir form apónta pro metodo do controller responsável
+							?>
+								<div class="form-group">
+									<label id="txt-categoria">Nome da categoria</label>
+									<input type="text" name="txt-categoria" id="txt-categoria" class="form-control" placeholder="Digite o nome da categoria">
+								</div>
+								<button type="submit" class="btn btn-default">Cadastrar</button>
+							<?php
+								echo form_close();
+							?>
 
 						</div>
 
@@ -34,7 +46,24 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-lg-12">
+							<?php
+								$this->table->set_heading("Nome da categoria", "Alterar", "Excluir"); // cabeçalho da tabela
+								//criando as linhas da tabela
+								foreach($categorias as $categoria){
+									$nomecat= $categoria->titulo;
+									$alterar= anchor(base_url('admin/categoria'),'<i class="fa fa-refresh fa-fw"></i> Alterar');
+									$excluir= anchor(base_url('admin/categoria'),'<i class="fa fa-remove fa-fw"></i> Excluir');
 
+									$this->table->add_row($nomecat,$alterar,$excluir);
+								}
+								//formatando a tabela
+								$this->table->set_template(array(
+										'table_open' => '<table class="table table-striped">'
+								));
+								//gerando a tabela
+								echo $this->table->generate();
+
+							?>
 						</div>
 
 					</div>
