@@ -11,22 +11,24 @@ class Sobrenos extends CI_Controller {
 		$this->load->model('categorias_model','modelcategorias');/*o segundo parâmetro
 		é um alias*/
 		$this->categorias = $this->modelcategorias->listar_categorias();
+		$this->load->model('usuarios_model', 'modelusuarios');
 
 	}
 
-	public function index($id, $slug=null){
+	public function index(){
 		$data['categorias'] = $this->categorias;
-		$this->load->model('publicacoes_model', 'modelpublicacoes');
-		$data['postagens'] = $this->modelpublicacoes->categoria_pub($id);
-		$data['subtitulodb'] = $this->modelcategorias->listar_titulo($id);
 
-		$header['titulo'] = 'Categoria';
-		$header['subtitulo'] = '';
-		$header['subtitulodb'] = $data['subtitulodb'];
+		$data['autores'] = $this->modelusuarios->listar_autores();
+
+		$data['titulo'] = 'Sobre Nós';
+		$data['subtitulo'] = 'Conheça nossa equipe';
+		$header['titulo'] = 'Sobre Nós';
+		$header['subtitulo'] = 'Conheça nossa equipe';
+
 
 		$this->load->view('frontend/template/html-header',$header);
 		$this->load->view('frontend/template/header', $data);
-		$this->load->view('frontend/categoria', $data);
+		$this->load->view('frontend/sobrenos', $data);
 		$this->load->view('frontend/template/aside');
 		$this->load->view('frontend/template/footer');
 		$this->load->view('frontend/template/html-footer');
@@ -35,7 +37,7 @@ class Sobrenos extends CI_Controller {
 	public function autores($id, $slug=null){
 
 		$data['categorias'] = $this->categorias;
-		$this->load->model('usuarios_model', 'modelusuarios');
+
 		$data['autores'] = $this->modelusuarios->listar_autor($id);
 
 		$header['titulo'] = 'Sobre Nós';
