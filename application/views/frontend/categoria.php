@@ -8,7 +8,7 @@
 
 			<h1 class="page-header">
 				<?= $titulo ?>
-				<small> > <?= $subtitulo ?></small>
+				<small> > <?= $subtitulo ? $subtitulo : $subtitulodb[0]->titulo ?></small>
 			</h1>
 
 			<!-- First Blog Post -->

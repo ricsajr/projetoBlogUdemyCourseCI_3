@@ -21,12 +21,36 @@ class Publicacoes_model extends CI_Model {
 	}
 
 	public function destaques_home(){
-		//ordenando antes de exibir
+		// estudar montagem da query
+		$this->db->select('usuario.id as idautor,
+			usuario.nome, postagens.id, postagens.titulo,
+			postagens.subtitulo, postagens.user, postagens.data, postagens.img');
+		$this->db->from('postagens');
+		$this->db->join('usuario', 'usuario.id = postagens.user');
+
 		$this->db->limit(4);//traz apenas os 4 ultimos itens
-		$this->db->order_by('data','DESC'); //ASC para ascendente DESC para descendente
-		return $this->db->get('postagens')->result();
+		//ordenando antes de exibir
+		$this->db->order_by('postagens.data','DESC'); //ASC para ascendente DESC para descendente
+		return $this->db->get()->result();
+	}
+
+
+	public function categoria_pub($id){
+
+		// estudar montagem da query
+		$this->db->select('usuario.id as idautor,
+			usuario.nome, postagens.id, postagens.titulo,
+			postagens.subtitulo, postagens.user, postagens.data,
+			postagens.img, postagens.categoria');
+		$this->db->from('postagens');
+		$this->db->join('usuario', 'usuario.id = postagens.user');
+		$this->db->where('postagens.categoria ='.$id);
+		//ordenando antes de exibir
+		$this->db->order_by('postagens.data','DESC'); //ASC para ascendente DESC para descendente
+		return $this->db->get()->result();
 
 	}
+
 
 
 

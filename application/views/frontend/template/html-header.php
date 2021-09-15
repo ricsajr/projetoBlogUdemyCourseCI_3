@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>Blog Home</title>
+	<title><?= $titulo.' - '.($subtitulo ? $subtitulo : $subtitulodb[0]->titulo) ?></title>
 
 	<!-- Bootstrap Core CSS -->
 	<link href="<?php echo base_url('assets/frontend/css/bootstrap.min.css')?>" rel="stylesheet">
