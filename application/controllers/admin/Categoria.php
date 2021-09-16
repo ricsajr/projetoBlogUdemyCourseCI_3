@@ -46,6 +46,17 @@ class Categoria extends CI_Controller {
 		}
 
 	}
+	public function excluir($id){
+
+		if($this->modelcategorias->excluir($id)){
+			redirect(base_url('admin/categoria'));
+		}
+		else{
+			echo 'Ops, ocorreu um erro';
+		}
+
+	}
+
 
 
 }

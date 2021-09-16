@@ -33,6 +33,14 @@ class Categorias_model extends CI_Model {
 		return $this->db->insert('categoria', $dados);
 	}
 
+	public function excluir($id){
+		//utilizando o md5() dentro da query, comparamos o id da coluna, também criptografado
+		$this->db->where('md5(id)',$id);// pegar id da url e comparar com o do banco encriptado
+		return $this->db->delete('categoria');//deletar selecionado em categoria
+
+
+	}
+
 
 
 
