@@ -58,5 +58,46 @@ class Categoria extends CI_Controller {
 	}
 
 
+	public function alterar($id){
+
+		$this->load->library('table');
+		$data['categorias'] = $this->modelcategorias->listar_categoria($id);
+		$data['titulo'] = 'Painel de Controle';
+		$data['subtitulo'] = 'Categoria';
+
+		$header['titulo'] = 'Painel de Controle';
+		$header['subtitulo'] = 'Alterar - Categoria';
+
+		$this->load->view('backend/template/html-header',$data);
+		$this->load->view('backend/template/template', $data);
+		$this->load->view('backend/alterar-categoria', $data);
+		$this->load->view('backend/template/html-footer');
+
+
+	}
+
+	public function salvar_alteracoes(){
+
+		//carrego a biblioteca para validação de form
+		$this->load->library('form_validation');
+		//listo os campos que desejo validar;(nome do campo, nome de exibição na validação, regras)
+		$this->form_validation->set_rules('txt-categoria','Nome da Categoria','required|min_length[3]|is_unique[categoria.titulo]');
+		if($this->form_validation->run() == FALSE){
+			$this->index();
+		}
+		else{
+			$titulo = $this->input->post('txt-categoria');
+			$id = $this->input->post('txt-id');
+			if($this->modelcategorias->alterar($titulo,$id)){
+				redirect(base_url('admin/categoria'));
+			}
+			else{
+				echo 'Ops, ocorreu um erro';
+			}
+		}
+
+	}
+
+
 
 }
