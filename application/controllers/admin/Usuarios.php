@@ -36,11 +36,12 @@ class Usuarios extends CI_Controller {
 		if(!$this->session->userdata('logado')){
 			redirect(base_url('admin/login'));
 		}
+		$this->load->model('usuarios_model', 'modelusuarios');
 		//carrego a biblioteca para validação de form
 		$this->load->library('form_validation');
 		//listo os campos que desejo validar;(nome do campo, nome de exibição na validação, regras)
 		$this->form_validation->set_rules('txt-nome','Nome do Usuário','required|min_length[3]');
-		$this->form_validation->set_rules('txt-email','Email','required|valid_email|');
+		$this->form_validation->set_rules('txt-email','Email','required|valid_email');
 		$this->form_validation->set_rules('txt-historico','Histórico','required|min_length[20]');
 		$this->form_validation->set_rules('txt-user','Username','required|min_length[3]|is_unique[usuario.user]');
 		$this->form_validation->set_rules('txt-senha','Senha','required|min_length[3]');
@@ -55,7 +56,7 @@ class Usuarios extends CI_Controller {
 			$user = $this->input->post('txt-user');
 			$senha = $this->input->post('txt-senha');
 			if($this->modelusuarios->adicionar($nome, $email, $historico, $user, $senha)){
-				redirect(base_url('admin/categoria'));
+				redirect(base_url('admin/usuarios'));
 			}
 			else{
 				echo 'Ops, ocorreu um erro';
@@ -67,9 +68,10 @@ class Usuarios extends CI_Controller {
 		if(!$this->session->userdata('logado')){
 			redirect(base_url('admin/login'));
 		}
+		$this->load->model('usuarios_model', 'modelusuarios');
 
-		if($this->modelcategorias->excluir($id)){
-			redirect(base_url('admin/categoria'));
+		if($this->modelusuarios->excluir($id)){
+			redirect(base_url('admin/usuarios'));
 		}
 		else{
 			echo 'Ops, ocorreu um erro';
@@ -82,18 +84,19 @@ class Usuarios extends CI_Controller {
 		if(!$this->session->userdata('logado')){
 			redirect(base_url('admin/login'));
 		}
+		$this->load->model('usuarios_model', 'modelusuarios');
 
-		$this->load->library('table');
-		$data['categorias'] = $this->modelcategorias->listar_categoria($id);
+
+		$data['usuarios'] = $this->modelusuarios->listar_usuario($id);
 		$data['titulo'] = 'Painel de Controle';
-		$data['subtitulo'] = 'Categoria';
+		$data['subtitulo'] = 'Usuarios';
 
 		$header['titulo'] = 'Painel de Controle';
 		$header['subtitulo'] = 'Alterar - Categoria';
 
 		$this->load->view('backend/template/html-header',$data);
 		$this->load->view('backend/template/template', $data);
-		$this->load->view('backend/alterar-categoria', $data);
+		$this->load->view('backend/alterar-usuario', $data);
 		$this->load->view('backend/template/html-footer');
 
 
@@ -103,18 +106,28 @@ class Usuarios extends CI_Controller {
 		if(!$this->session->userdata('logado')){
 			redirect(base_url('admin/login'));
 		}
+		$this->load->model('usuarios_model', 'modelusuarios');
 
 		//carrego a biblioteca para validação de form
 		$this->load->library('form_validation');
 		//listo os campos que desejo validar;(nome do campo, nome de exibição na validação, regras)
-		$this->form_validation->set_rules('txt-categoria','Nome da Categoria','required|min_length[3]|is_unique[categoria.titulo]');
+		$this->form_validation->set_rules('txt-nome','Nome do Usuário','required|min_length[3]');
+		$this->form_validation->set_rules('txt-email','Email','required|valid_email');
+		$this->form_validation->set_rules('txt-historico','Histórico','required|min_length[20]');
+		$this->form_validation->set_rules('txt-user','Username','required|min_length[3]|is_unique[usuario.user]');
+		$this->form_validation->set_rules('txt-senha','Senha','required|min_length[3]');
+		$this->form_validation->set_rules('txt-confirmarsenha','Confirmar Senha','required|matches[txt-senha]');
 		if($this->form_validation->run() == FALSE){
-			$this->index();
+			$this->alterar();
 		}
 		else{
-			$titulo = $this->input->post('txt-categoria');
+			$nome = $this->input->post('txt-nome');
+			$email = $this->input->post('txt-email');
+			$historico = $this->input->post('txt-historico');
+			$user = $this->input->post('txt-user');
+			$senha = $this->input->post('txt-senha');
 			$id = $this->input->post('txt-id');
-			if($this->modelcategorias->alterar($titulo,$id)){
+			if($this->modelusuarios->alterar($nome, $email, $historico, $user, $senha, $id)){
 				redirect(base_url('admin/categoria'));
 			}
 			else{
@@ -153,7 +166,7 @@ class Usuarios extends CI_Controller {
 			$senha= $this->input->post('txt-senha');
 
 			$this->db->where('user', $usuario);//helper db armazena montagem da query
-			$this->db->where('senha', $senha);
+			$this->db->where('senha', md5($senha));
 			$userlogado = $this->db->get('usuario')->result();
 			if(count($userlogado)==1){
 				$dadosSessao['userlogado'] = $userlogado[0];
