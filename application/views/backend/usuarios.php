@@ -17,23 +17,23 @@
 						<div class="col-lg-12">
 							<?php
 							echo validation_errors('<div class="alert alert-danger">','</div>');//helper para trazer os erros da validação do form no controller
-							echo form_open('admin/usuario/inserir');//helper para abrir form apónta pro metodo do controller responsável
+							echo form_open('admin/usuarios/inserir');//helper para abrir form apónta pro metodo do controller responsável
 							?>
 							<div class="form-group">
 								<label id="txt-nome">Nome do Usuário</label>
-								<input type="text" name="txt-nome" id="txt-nome" class="form-control" placeholder="Digite o nome do usuário">
+								<input type="text" name="txt-nome" id="txt-nome" class="form-control" placeholder="Digite o nome do usuário" value="<?= set_value('txt-nome')?>">
 							</div>
 							<div class="form-group">
 								<label id="txt-email">Email</label>
-								<input type="text" name="txt-email" id="txt-email" class="form-control" placeholder="Digite o email do usuário">
+								<input type="text" name="txt-email" id="txt-email" class="form-control" placeholder="Digite o email do usuário" value="<?= set_value('txt-email')?>">
 							</div>
 							<div class="form-group">
 								<label id="txt-historico">Histórico</label>
-								<textarea name="txt-historico" id="txt-historico" class="form-control"><?= "Digite o historico do usuário" ?></textarea>
+								<textarea name="txt-historico" id="txt-historico" class="form-control"><?= set_value('txt-historico')?></textarea>
 							</div>
 							<div class="form-group">
 								<label id="txt-user">User</label>
-								<input type="text" name="txt-user" id="txt-user" class="form-control" placeholder="Digite o username">
+								<input type="text" name="txt-user" id="txt-user" class="form-control" placeholder="Digite o username" value="<?= set_value('txt-user')?>">
 							</div>
 							<div class="form-group">
 								<label id="txt-senha">Senha</label>
