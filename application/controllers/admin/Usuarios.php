@@ -11,15 +11,23 @@ class Usuarios extends CI_Controller {
 	}
 
 	public function index(){
+		if(!$this->session->userdata('logado')){
+			redirect(base_url('admin/login'));
+		}
+
+		$this->load->library('table'); //preciso pra gerar a table na view
+
+		$this->load->model('usuarios_model', 'modelusuarios');
 		$data['titulo'] = 'Painel de Controle';
 		$data['subtitulo'] = 'Home';
+		$data['usuarios'] = $this->modelusuarios->listar_autores();
 
 		$header['titulo'] = 'Painel de Controle';
-		$header['subtitulo'] = 'Home';
+		$header['subtitulo'] = 'Usuários';
 
 		$this->load->view('backend/template/html-header',$data);
 		$this->load->view('backend/template/template', $data);
-		$this->load->view('backend/home', $data);
+		$this->load->view('backend/usuarios', $data);
 		$this->load->view('backend/template/html-footer');
 
 	}
