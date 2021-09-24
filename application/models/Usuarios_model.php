@@ -60,14 +60,15 @@ class Usuarios_model extends CI_Model {
 
 
 	public function alterar($nome, $email, $historico, $user, $senha, $id){
+		
+		$dados['id'] = $id;
 		$dados['nome'] = $nome;
 		$dados['email'] = $email;
 		$dados['historico'] = $historico;
 		$dados['user'] = $user;
 		$dados['senha'] = md5($senha);
-		$dados['senha'] = md5($senha);
 		$this->db->where('id', $id);
-		return $this->db->update('categoria',$dados);
+		return $this->db->update('usuario',$dados);
 
 	}
 

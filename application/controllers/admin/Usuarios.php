@@ -114,11 +114,11 @@ class Usuarios extends CI_Controller {
 		$this->form_validation->set_rules('txt-nome','Nome do Usuário','required|min_length[3]');
 		$this->form_validation->set_rules('txt-email','Email','required|valid_email');
 		$this->form_validation->set_rules('txt-historico','Histórico','required|min_length[20]');
-		$this->form_validation->set_rules('txt-user','Username','required|min_length[3]|is_unique[usuario.user]');
+		$this->form_validation->set_rules('txt-user','Username','required|min_length[3]');
 		$this->form_validation->set_rules('txt-senha','Senha','required|min_length[3]');
 		$this->form_validation->set_rules('txt-confirmarsenha','Confirmar Senha','required|matches[txt-senha]');
 		if($this->form_validation->run() == FALSE){
-			$this->alterar();
+			$this->alterar($this->input->post('txt-id'));
 		}
 		else{
 			$nome = $this->input->post('txt-nome');
@@ -127,8 +127,9 @@ class Usuarios extends CI_Controller {
 			$user = $this->input->post('txt-user');
 			$senha = $this->input->post('txt-senha');
 			$id = $this->input->post('txt-id');
+
 			if($this->modelusuarios->alterar($nome, $email, $historico, $user, $senha, $id)){
-				redirect(base_url('admin/categoria'));
+				redirect(base_url('admin/usuarios'));
 			}
 			else{
 				echo 'Ops, ocorreu um erro';

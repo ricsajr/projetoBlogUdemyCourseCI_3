@@ -17,9 +17,10 @@
 						<div class="col-lg-12">
 							<?php
 								echo validation_errors('<div class="alert alert-danger">','</div>');//helper para trazer os erros da validação do form no controller
-								echo form_open('admin/usuarios/salvar-alteracoes');//helper para abrir form apónta pro metodo do controller responsável
+								echo form_open('admin/usuarios/salvar_alteracoes');//helper para abrir form apónta pro metodo do controller responsável
 								foreach($usuarios as $usuario) :
 							?>
+
 							<div class="form-group">
 								<label id="txt-nome">Nome do Usuário</label>
 								<input type="text" name="txt-nome" id="txt-nome" class="form-control" placeholder="Digite o nome do usuário" value="<?= $usuario->nome?>">
@@ -45,7 +46,7 @@
 								<input type="password" name="txt-confirmarsenha" id="txt-confirmarsenha" class="form-control">
 							</div>
 							<input type="hidden" name="txt-id" id="txt-id" class="form-control" value="<?= $usuario->id?>">
-							<button type="submit" class="btn btn-default">Cadastrar</button>
+							<button type="submit" class="btn btn-default">Atualizar</button>
 							<?php
 								echo form_close();
 								endforeach;
@@ -64,12 +65,12 @@
 		<div class="col-lg-6">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<?= 'Alterar '.$subtitulo.' existente' ?>
+					<?= 'Imagem de destaque do '.$subtitulo.' existente' ?>
 				</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-lg-12">
-							<?= 'Imagem de destaque do '.$subtitulo.' existente' ?>
+
 						</div>
 
 					</div>
