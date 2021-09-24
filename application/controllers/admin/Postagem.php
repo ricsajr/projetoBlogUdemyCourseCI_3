@@ -36,14 +36,22 @@ class Postagem extends CI_Controller {
 		//carrego a biblioteca para validação de form
 		$this->load->library('form_validation');
 		//listo os campos que desejo validar;(nome do campo, nome de exibição na validação, regras)
-		$this->form_validation->set_rules('txt-categoria','Nome da Categoria','required|min_length[3]|is_unique[categoria.titulo]');
+		$this->form_validation->set_rules('txt-titulo','Titulo','required|min_length[3]');
+		$this->form_validation->set_rules('txt-subtitulo','Subtitulo','required|min_length[3]');
+		$this->form_validation->set_rules('txt-conteudo','Conteudo','required|min_length[20]');
+		//lembrar de validar campo data com jquery
 		if($this->form_validation->run() == FALSE){
 			$this->index();
 		}
 		else{
-			$titulo = $this->input->post('txt-categoria');
-			if($this->modelcategorias->adicionar($titulo)){
-				redirect(base_url('admin/categoria'));
+			$titulo = $this->input->post('txt-titulo');
+			$subtitulo = $this->input->post('txt-subtitulo');
+			$conteudo = $this->input->post('txt-conteudo');
+			$datapub = $this->input->post('txt-data');
+			$categoria = $this->input->post('select-categoria');
+			$userpub = $this->input->post('txt-usuario');
+			if($this->modelpublicacao->adicionar($titulo, $subtitulo, $conteudo, $datapub, $categoria, $userpub)){
+				redirect(base_url('admin/postagem'));
 			}
 			else{
 				echo 'Ops, ocorreu um erro';
@@ -53,8 +61,8 @@ class Postagem extends CI_Controller {
 	}
 	public function excluir($id){
 
-		if($this->modelcategorias->excluir($id)){
-			redirect(base_url('admin/categoria'));
+		if($this->modelpublicacao->excluir($id)){
+			redirect(base_url('admin/postagem'));
 		}
 		else{
 			echo 'Ops, ocorreu um erro';

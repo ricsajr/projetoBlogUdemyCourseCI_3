@@ -78,6 +78,24 @@ class Publicacoes_model extends CI_Model {
 
 	}
 
+	public function adicionar($titulo, $subtitulo, $conteudo, $datapub, $categoria, $userpub){
+		$dados['titulo'] = $titulo;
+		$dados['subtitulo'] = $subtitulo;
+		$dados['conteudo'] = $conteudo;
+		$dados['user'] = $userpub;
+		$dados['data'] = $datapub;
+		$dados['categoria'] = $categoria;
+		return $this->db->insert('postagens', $dados);
+	}
+
+	public function excluir($id){
+		//utilizando o md5() dentro da query, comparamos o id da coluna, também criptografado
+		$this->db->where('md5(id)',$id);// pegar id da url e comparar com o do banco encriptado
+		return $this->db->delete('postagens');//deletar selecionado em categoria
+
+
+	}
+
 
 
 
