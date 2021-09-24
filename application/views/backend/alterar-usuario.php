@@ -68,6 +68,24 @@
 					<?= 'Imagem de destaque do '.$subtitulo.' existente';?>
 				</div>
 				<div class="panel-body">
+
+				<div class="row" style="padding-bottom: 10px" >
+					<div class="col-lg-3 col-lg-offset-3">
+						<?php
+
+							if($usuario->img == 1) {
+								//img() helper do CI
+								//informar caminho da imagem
+								echo img('assets/frontend/img/usuarios/' . md5($usuario->id) . '.jpg');
+							}
+							else{
+								echo img('assets/frontend/img/img/semFoto.jpg');
+							}
+
+						?>
+					</div>
+				</div>
+
 					<div class="row">
 						<div class="col-lg-12">
 							<?php

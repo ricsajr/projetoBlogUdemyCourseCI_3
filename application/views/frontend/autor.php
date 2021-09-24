@@ -15,9 +15,20 @@
 			<!-- First Blog Post -->
 
 			<?php foreach($autores as $autor) :?>
-
 				<div class="col-md-4">
-					<img class="img-responsive img-circle" src="http://placehold.it/200x200" alt="">
+					<?php
+
+					if($autor->img == 1) {
+						//img() helper do CI
+						//informar caminho da imagem
+						$mostraImg = 'assets/frontend/img/usuarios/' . md5($autor->id) . '.jpg';
+					}
+					else{
+						$mostraImg = 'assets/frontend/img/img/semFoto.jpg';
+					}
+
+					?>
+					<img class="img-responsive img-circle" src="<?= base_url($mostraImg)?>" alt="">
 				</div>
 				<div class="col-md-8 ">
 					<h2>

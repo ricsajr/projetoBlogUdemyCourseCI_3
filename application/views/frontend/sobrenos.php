@@ -42,7 +42,19 @@
 
 			<?php foreach($autores as $autor) :?>
 					<div class="col-md-4  col-xs-6">
-						<img class="img-responsive img-circle" src="http://placehold.it/200x200" alt="">
+						<?php
+
+						if($autor->img == 1) {
+							//img() helper do CI
+							//informar caminho da imagem
+							$mostraImg = 'assets/frontend/img/usuarios/' . md5($autor->id) . '.jpg';
+						}
+						else{
+							$mostraImg = 'assets/frontend/img/img/semFoto.jpg';
+						}
+
+						?>
+						<img class="img-responsive img-circle" src="<?= base_url($mostraImg)?>" alt="">
 						<h4 class="text-center">
 							<a href="<?= base_url('autor/'.$autor->id.'/'.limpar($autor->nome)) ?>"><?= $autor->nome ?></a>
 						</h4>

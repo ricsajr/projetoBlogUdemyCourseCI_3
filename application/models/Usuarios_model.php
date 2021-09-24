@@ -51,7 +51,7 @@ class Usuarios_model extends CI_Model {
 
 	}
 	public function  listar_usuario($id){
-		$this->db->select('id,nome,historico,email,user');
+		$this->db->select('id,nome,historico,email,user,img');
 		$this->db->from('usuario');
 		$this->db->where('md5(id)',$id);
 		return $this->db->get()->result();

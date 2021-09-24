@@ -66,11 +66,22 @@
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-lg-12">
+							<style>
+								img{
+									width: 60px;
+								}
+							</style>
 							<?php
 							$this->table->set_heading("Foto","Nome do Usuário", "Alterar", "Excluir"); // cabeçalho da tabela
 							//criando as linhas da tabela
 							foreach($usuarios as $usuario){
-								$fotouser = "Foto";
+								if ($usuario->img == 1) {
+									//img() helper do CI
+									//informar caminho da imagem
+									$fotouser = img('assets/frontend/img/usuarios/' . md5($usuario->id) . '.jpg');
+								} else {
+									$fotouser = img('assets/frontend/img/img/semFoto.jpg');
+								}
 								$nomeuser= $usuario->nome;
 								$alterar= anchor(base_url('admin/usuarios/alterar/'.md5($usuario->id)),'<i class="fa fa-refresh fa-fw"></i> Alterar');
 								$excluir= anchor(base_url('admin/usuarios/excluir/'.md5($usuario->id)),'<i class="fa fa-remove fa-fw"></i> Excluir');
