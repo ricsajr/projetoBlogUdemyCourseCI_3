@@ -74,16 +74,17 @@ class Postagem extends CI_Controller {
 	public function alterar($id){
 
 		$this->load->library('table');
-		$data['categorias'] = $this->modelcategorias->listar_categoria($id);
+		$data['categorias'] = $this->modelcategorias->listar_categorias();
+		$data['publicacoes'] = $this->modelpublicacao->listar_publicacoes($id);
 		$data['titulo'] = 'Painel de Controle';
-		$data['subtitulo'] = 'Categoria';
+		$data['subtitulo'] = 'Publicação';
 
 		$header['titulo'] = 'Painel de Controle';
-		$header['subtitulo'] = 'Alterar - Categoria';
+		$header['subtitulo'] = 'Alterar - Publicação';
 
 		$this->load->view('backend/template/html-header',$data);
 		$this->load->view('backend/template/template', $data);
-		$this->load->view('backend/alterar-categoria', $data);
+		$this->load->view('backend/alterar-publicacao', $data);
 		$this->load->view('backend/template/html-footer');
 
 
@@ -94,15 +95,22 @@ class Postagem extends CI_Controller {
 		//carrego a biblioteca para validação de form
 		$this->load->library('form_validation');
 		//listo os campos que desejo validar;(nome do campo, nome de exibição na validação, regras)
-		$this->form_validation->set_rules('txt-categoria','Nome da Categoria','required|min_length[3]|is_unique[categoria.titulo]');
+		$this->form_validation->set_rules('txt-titulo','Titulo','required|min_length[3]');
+		$this->form_validation->set_rules('txt-subtitulo','Subtitulo','required|min_length[3]');
+		$this->form_validation->set_rules('txt-conteudo','Conteudo','required|min_length[20]');
+		//lembrar de validar campo data com jquery
 		if($this->form_validation->run() == FALSE){
-			$this->index();
+			$this->alterar($this->input->post('txt-usuario'));
 		}
 		else{
-			$titulo = $this->input->post('txt-categoria');
+			$titulo = $this->input->post('txt-titulo');
+			$subtitulo = $this->input->post('txt-subtitulo');
+			$conteudo = $this->input->post('txt-conteudo');
+			$datapub = $this->input->post('txt-data');
+			$categoria = $this->input->post('select-categoria');
 			$id = $this->input->post('txt-id');
-			if($this->modelcategorias->alterar($titulo,$id)){
-				redirect(base_url('admin/categoria'));
+			if($this->modelpublicacao->alterar($titulo, $subtitulo, $conteudo, $datapub, $categoria,$id)){
+				redirect(base_url('admin/postagem'));
 			}
 			else{
 				echo 'Ops, ocorreu um erro';
@@ -110,6 +118,7 @@ class Postagem extends CI_Controller {
 		}
 
 	}
+
 
 
 

@@ -77,6 +77,12 @@ class Publicacoes_model extends CI_Model {
 		return $this->db->get('postagens')->result();
 
 	}
+	public function listar_publicacoes($id){
+		//ordenando antes de exibir
+		$this->db->where('md5(id)',$id);
+		return $this->db->get('postagens')->result();
+
+	}
 
 	public function adicionar($titulo, $subtitulo, $conteudo, $datapub, $categoria, $userpub){
 		$dados['titulo'] = $titulo;
@@ -93,6 +99,16 @@ class Publicacoes_model extends CI_Model {
 		$this->db->where('md5(id)',$id);// pegar id da url e comparar com o do banco encriptado
 		return $this->db->delete('postagens');//deletar selecionado em categoria
 
+
+	}
+	public function alterar($titulo, $subtitulo, $conteudo, $datapub, $categoria,$id){
+		$dados['titulo'] = $titulo;
+		$dados['subtitulo'] = $subtitulo;
+		$dados['conteudo'] = $conteudo;
+		$dados['data'] = $datapub;
+		$dados['categoria'] = $categoria;
+		$this->db->where('id', $id);
+		return $this->db->update('postagens',$dados);
 
 	}
 
