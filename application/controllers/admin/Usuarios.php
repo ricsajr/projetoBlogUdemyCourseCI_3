@@ -165,7 +165,13 @@ class Usuarios extends CI_Controller {
 			//carregando a lib que altera imagens
 			$this->load->library('image_lib', $config2);
 			if($this->image_lib->resize()){
-				redirect(base_url('admin/usuarios/alterar/'.$id));
+				if($this->modelusuarios->alterar_img($id)){
+					redirect(base_url('admin/usuarios/alterar/'.$id));
+				}
+				else{
+					echo 'Ops, ocorreu um erro';
+				}
+
 			}
 			else{
 				echo $this->image_lib->display_errors();
