@@ -71,6 +71,13 @@ class Publicacoes_model extends CI_Model {
 
 	}
 
+	public function listar_publicacao(){
+		//ordenando antes de exibir
+		$this->db->order_by('data','DESC'); //ASC para ascendente DESC para descendente
+		return $this->db->get('postagens')->result();
+
+	}
+
 
 
 
