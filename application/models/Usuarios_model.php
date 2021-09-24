@@ -60,7 +60,7 @@ class Usuarios_model extends CI_Model {
 
 
 	public function alterar($nome, $email, $historico, $user, $senha, $id){
-		
+
 		$dados['id'] = $id;
 		$dados['nome'] = $nome;
 		$dados['email'] = $email;

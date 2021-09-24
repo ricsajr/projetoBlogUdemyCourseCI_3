@@ -49,7 +49,7 @@
 							<button type="submit" class="btn btn-default">Atualizar</button>
 							<?php
 								echo form_close();
-								endforeach;
+
 							?>
 
 						</div>
@@ -65,12 +65,30 @@
 		<div class="col-lg-6">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<?= 'Imagem de destaque do '.$subtitulo.' existente' ?>
+					<?= 'Imagem de destaque do '.$subtitulo.' existente';?>
 				</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-lg-12">
-
+							<?php
+								echo form_open_multipart('admin/usuarios/nova_foto');//pesquisar documentação
+								$divopen = '<div class="form-group">';
+								$divclose = '</div>';
+								//adicionando campos do form com helpers do codeigniter
+								echo form_hidden('id',md5($usuario->id));// nome,
+								echo $divopen;
+								$imagem = array('name' => 'userfile', 'id' => 'userfile', 'class' => 'form-control');
+								echo form_upload($imagem);//o identificador deve ser obrigatóriamente 'userfile'
+								echo $divclose;
+								echo $divopen;
+								$botao = array('name' => 'btn-adicionar', 'id' => 'btn-adicionar', 'class' => 'btn btn-default',
+									'value' => 'Adicionar nova imagem'
+								);
+								echo form_submit($botao);
+								echo $divclose;
+								echo form_close();
+								endforeach;
+							?>
 						</div>
 
 					</div>
