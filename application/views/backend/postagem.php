@@ -70,18 +70,29 @@
 						<div class="col-lg-12">
 							<style>
 								img{
-									width: 60px;
+									width: 240px;
 								}
 							</style>
 							<?php
 							$this->table->set_heading("Foto","Titulo", "Alterar", "Data","Excluir"); // cabeçalho da tabela
 							//criando as linhas da tabela
 							foreach($publicacoes as $publicacao){
-								$fotopub = "Foto";
+
+
+								if ($publicacao->img == 1) {
+									//img() helper do CI
+									//informar caminho da imagem
+									$fotopub = img('assets/frontend/img/publicacoes/' . md5($publicacao->id) . '.jpg');
+								} else {
+									$fotopub = img('assets/frontend/img/img/semFoto.jpg');
+								}
+
+
+
 								$data = postadoem($publicacao->data);
-								$titulo= $publicacao->titulo;
-								$alterar= anchor(base_url('admin/postagem/alterar/'.md5($publicacao->id)),'<i class="fa fa-refresh fa-fw"></i> Alterar');
-								$excluir= anchor(base_url('admin/postagem/excluir/'.md5($publicacao->id)),'<i class="fa fa-remove fa-fw"></i> Excluir');
+								$titulo = $publicacao->titulo;
+								$alterar = anchor(base_url('admin/postagem/alterar/'.md5($publicacao->id)),'<i class="fa fa-refresh fa-fw"></i> Alterar');
+								$excluir = anchor(base_url('admin/postagem/excluir/'.md5($publicacao->id)),'<i class="fa fa-remove fa-fw"></i> Excluir');
 
 								$this->table->add_row($fotopub,$titulo,$alterar,$data,$excluir);
 							}

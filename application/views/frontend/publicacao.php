@@ -12,17 +12,27 @@
 
 			<?php foreach($postagens as $destaque) :?>
 
-				<h1>
+				<h2>
 					<?= $destaque->titulo ?>
-				</h1>
+				</h2>
 				<p class="lead">
 					por <a href="<?= base_url('autor/'.$destaque->idautor.'/'.limpar($destaque->nome)); ?>"><?= $destaque->nome ?></a>
 				</p>
 				<p><span class="glyphicon glyphicon-time"></span> <?= postadoem($destaque->data); ?> </p>
 				<hr>
+				<?php
+
+					if($destaque->img == 1) {
+						
+						$fotopub =  ('assets/frontend/img/publicacoes/' . md5($destaque->id) . '.jpg');
+				?>				
+						<img class="img-responsive" src=<?= $fotopub ?> alt="">
+						<hr>
+				<?php } ?>
+
+
+
 				<p><i><?= $destaque->subtitulo ?></i></p>
-				<img class="img-responsive" src="http://placehold.it/900x300" alt="">
-				<hr>
 				<p>
 					<?= $destaque->conteudo ?>
 				</p>

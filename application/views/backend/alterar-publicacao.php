@@ -76,6 +76,11 @@
 				<div class="panel-heading">
 					<?= 'Imagem de destaque do '.$subtitulo.' existente';?>
 				</div>
+				<style>
+					img{
+						width:400px;
+					};
+				</style>
 				<div class="panel-body">
 
 					<div class="row" style="padding-bottom: 10px" >

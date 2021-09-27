@@ -118,6 +118,53 @@ class Postagem extends CI_Controller {
 		}
 
 	}
+	public function nova_foto(){
+		if(!$this->session->userdata('logado')){
+			redirect(base_url('admin/login'));
+		}
+
+
+		$id = $this->input->post('id');
+		$config['upload_path'] = './assets/frontend/img/publicacoes';//apontar para o diretorio onde a imagem será salva
+		$config['allowed_types'] = 'jpg';// tipos de arquivo aceitos
+		$config['file_name'] = $id.".jpg";// id do usuario concatenado com ".extensão
+		$config['overwrite'] = TRUE;// TRUE para quando trocarmos a imagem, ela ser substituída
+		//carregar biblioteca de upload de imagens
+		$this->load->library('upload', $config);
+
+		//se não der upload
+		if(!$this->upload->do_upload()){
+			echo $this->upload->display_errors();
+		}
+		else{
+			//aqui posso adicionar thumb, marca d'água etc...
+			//nesse caso configurando o tamanho apenas
+			$config2['source_image'] = './assets/frontend/img/publicacoes/'.$id.'.jpg';
+			$config2['create_thumb'] = FALSE;
+			$config2['width'] = 900;//medida em pixels
+			$config2['height'] = 300;//medida em pixels
+			//carregando a lib que altera imagens
+			$this->load->library('image_lib', $config2);
+			if($this->image_lib->resize()){
+				if($this->modelpublicacao->alterar_img($id)){
+					redirect(base_url('admin/postagem/alterar/'.$id));
+				}
+				else{
+					echo 'Ops, ocorreu um erro';
+				}
+
+			}
+			else{
+				echo $this->image_lib->display_errors();
+			}
+
+		}
+
+
+
+
+
+	}
 
 
 
